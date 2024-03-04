@@ -15,6 +15,8 @@ public class Main extends JFrame {
 
     public static void main (String[] args) {
         Main mn = new Main();
+        FractalPanel fp = new FractalPanel();
+        mn.add(fp);
     }
 
 }
