@@ -3,7 +3,10 @@ import java.awt.*;
 
 public class FractalPanel extends JPanel {
 
-    public FractalPanel(){
+    private int amount;
+
+    public FractalPanel(int amount){
+        this.amount = amount;
         setBackground(Color.white);
     }
 
@@ -12,7 +15,7 @@ public class FractalPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        drawCircleFractal(g, 1, 4, 10, 10);
+        drawCircleFractal(g, 1, amount, 10, 10);
     }
 
     public void drawSomething(Graphics g){
@@ -25,7 +28,7 @@ public class FractalPanel extends JPanel {
 
     public void drawCircleFractal(Graphics g, int amount, int max_amount, int offset_x, int offset_y) {
         if (amount > max_amount) return;
-        int wh = (int) (400 / Math.pow(2, amount - 1));
+        int wh = (int) (500 / Math.pow(2, amount - 1));
         if (amount == 1) {
             g.drawOval(offset_x, offset_y, wh, wh);
             drawCircleFractal(g, amount + 1, max_amount, offset_x, offset_y);
@@ -42,5 +45,11 @@ public class FractalPanel extends JPanel {
             g.drawOval(wh/2 + offset_x, wh + offset_y, wh, wh);
             drawCircleFractal(g, amount + 1, max_amount, wh/2 + offset_x, wh + offset_y);
         }
+    }
+
+    public void updateFractal(int a) {
+        amount = a;
+        revalidate();
+        repaint();
     }
 }
