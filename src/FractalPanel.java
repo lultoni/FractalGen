@@ -4,8 +4,10 @@ import java.awt.*;
 public class FractalPanel extends JPanel {
 
     private int amount;
+    public int currentFractal;
 
     public FractalPanel(int amount){
+        currentFractal = 0;
         this.amount = amount;
         setBackground(Color.white);
     }
@@ -15,7 +17,17 @@ public class FractalPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        drawCircleFractal(g, 1, amount, 10, 10);
+        switch (currentFractal) {
+            case 0 -> drawCircleFractal(g, 1, amount, 10, 10);
+            case 1 -> drawHexFractal(g, 1, amount, 10, 10);
+            case 2 -> drawSquareFractal(g, 1, amount, 10, 10);
+        }
+    }
+
+    private void drawSquareFractal(Graphics g, int i, int amount, int i1, int i2) {
+    }
+
+    private void drawHexFractal(Graphics g, int i, int amount, int i1, int i2) {
     }
 
     public void drawSomething(Graphics g){
