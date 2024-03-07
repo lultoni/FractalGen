@@ -44,27 +44,30 @@ public class FractalPanel extends JPanel {
         if (amount > max_amount) return;
         int offset = amount * 10;
 
-        int x1 = 100;
-        int y1 = 50;
+        int lengthSide = (int) (250 - 10 * (1 - (amount/max_amount)));
 
-        int x2 = 220;
-        int y2 = 50;
+        int x6 = 0;
+        int y6 = (int) (lengthSide / 1.153846);
 
-        int x3 = 270;
-        int y3 = 150;
+        int x1 = lengthSide / 2;
+        int y1 = 0;
 
-        int x4 = 220;
-        int y4 = 250;
+        int x2 = x1 + lengthSide;
+        int y2 = y1;
 
-        int x5 = 100;
-        int y5 = 250;
+        int x3 = lengthSide * 2;
+        int y3 = y6;
 
-        int x6 = 50;
-        int y6 = 150;
+        int x4 = (int) (lengthSide * 1.5);
+        int y4 = y6 * 2;
+
+        int x5 = x1;
+        int y5 = y4;
 
         int[] xPoints = new int[]{x1, x2, x3, x4, x5, x6};
         int[] yPoints = new int[]{y1, y2, y3, y4, y5, y6};
-        for (int i = 0; i < xPoints.length; i++) xPoints[i] = xPoints[i] * 1 + offset;
+        for (int i = 0; i < xPoints.length; i++) xPoints[i] = xPoints[i] + offset;
+        for (int i = 0; i < yPoints.length; i++) yPoints[i] = yPoints[i] + offset * 2;
         g.drawPolygon(xPoints, yPoints, 6);
         drawHexFractal(g, amount + 1, max_amount);
     }
