@@ -4,10 +4,10 @@ import java.awt.*;
 public class FractalPanel extends JPanel {
 
     private int amount;
-    public int currentFractal;
+    public static String currentFractal;
 
     public FractalPanel(int amount){
-        currentFractal = 0;
+        currentFractal = "Circles";
         this.amount = amount;
         setBackground(Color.white);
     }
@@ -18,9 +18,18 @@ public class FractalPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         switch (currentFractal) {
-            case 0 -> drawCircleFractal(g, 1, amount, 10, 10);
-            case 1 -> drawHexFractal(g, 1, amount, 10, 10);
-            case 2 -> drawSquareFractal(g, 1, amount, 10, 10);
+            case "Circles" -> {
+                updateFractal(AmountControl.getAmount());
+                drawCircleFractal(g, 1, amount, 10, 10);
+            }
+            case "Hexagons" -> {
+                updateFractal(AmountControl.getAmount());
+                drawHexFractal(g, 1, amount, 10, 10);
+            }
+            case "Squares" -> {
+                updateFractal(AmountControl.getAmount());
+                drawSquareFractal(g, 1, amount, 10, 10);
+            }
         }
     }
 
@@ -64,4 +73,11 @@ public class FractalPanel extends JPanel {
         revalidate();
         repaint();
     }
+    public static String getCurrentFractal() {
+        return currentFractal;
+    }
+    public static void setCurrentFractal(String x) {
+        currentFractal = x;
+    }
 }
+
