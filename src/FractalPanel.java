@@ -4,12 +4,16 @@ import java.awt.*;
 public class FractalPanel extends JPanel {
 
     private int amount;
-    public static String currentFractal;
+    public String currentFractal;
 
     public FractalPanel(int amount){
         currentFractal = "Circles";
         this.amount = amount;
         setBackground(Color.white);
+    }
+
+    public void setCurrentFractal(String s) {
+        currentFractal = s;
     }
 
     //starts automatically when adding Panel to Frame
@@ -19,16 +23,16 @@ public class FractalPanel extends JPanel {
         super.paintComponent(g);
         switch (currentFractal) {
             case "Circles" -> {
-                updateFractal(AmountControl.getAmount());
                 drawCircleFractal(g, 1, amount, 10, 10);
+                updateFractal(amount);
             }
             case "Hexagons" -> {
-                updateFractal(AmountControl.getAmount());
-                drawHexFractal(g, 1, amount, 10, 10);
+                drawHexFractal(g, 1, amount);
+                updateFractal(amount);
             }
             case "Squares" -> {
-                updateFractal(AmountControl.getAmount());
                 drawSquareFractal(g, 1, amount, 10, 10);
+                updateFractal(amount);
             }
         }
     }
@@ -36,15 +40,33 @@ public class FractalPanel extends JPanel {
     private void drawSquareFractal(Graphics g, int i, int amount, int i1, int i2) {
     }
 
-    private void drawHexFractal(Graphics g, int i, int amount, int i1, int i2) {
-    }
+    private void drawHexFractal(Graphics g, int amount, int max_amount) {
+        if (amount > max_amount) return;
+        int offset = amount * 10;
 
-    public void drawSomething(Graphics g){
-        //Rekursive Methode zum Zeichnen auf dem Panel
-        int offset = 10;
-        for (int i = 0; i < 10; i++) {
-            g.drawRect(i * offset + offset,i * offset + offset,offset * i,offset * i);
-        }
+        int x1 = 100;
+        int y1 = 50;
+
+        int x2 = 220;
+        int y2 = 50;
+
+        int x3 = 270;
+        int y3 = 150;
+
+        int x4 = 220;
+        int y4 = 250;
+
+        int x5 = 100;
+        int y5 = 250;
+
+        int x6 = 50;
+        int y6 = 150;
+
+        int[] xPoints = new int[]{x1, x2, x3, x4, x5, x6};
+        int[] yPoints = new int[]{y1, y2, y3, y4, y5, y6};
+        for (int i = 0; i < xPoints.length; i++) xPoints[i] = xPoints[i] * 1 + offset;
+        g.drawPolygon(xPoints, yPoints, 6);
+        drawHexFractal(g, amount + 1, max_amount);
     }
 
     public void drawCircleFractal(Graphics g, int amount, int max_amount, int offset_x, int offset_y) {
@@ -73,11 +95,4 @@ public class FractalPanel extends JPanel {
         revalidate();
         repaint();
     }
-    public static String getCurrentFractal() {
-        return currentFractal;
-    }
-    public static void setCurrentFractal(String x) {
-        currentFractal = x;
-    }
 }
-

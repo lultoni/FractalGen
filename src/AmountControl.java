@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class AmountControl extends JPanel {
 
-    private static int amount;
+    private int amount;
     private FractalPanel panel;
 
     public AmountControl(FractalPanel panel) {
@@ -45,7 +45,7 @@ public class AmountControl extends JPanel {
         return String.valueOf(amount);
     }
 
-    public static int getAmount() {
+    public int getAmount() {
         return amount;
     }
 

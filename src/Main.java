@@ -29,20 +29,17 @@ public class Main extends JFrame {
 
         controlPanel.add(amountControl);
 
-        dropDownMenu.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e)
-            {
-                FractalPanel.setCurrentFractal(String.valueOf(dropDownMenu.getSelectedItem()));
-            }
-        });
-
         FractalPanel fp = new FractalPanel(amountControl.getAmount());
+        dropDownMenu.addActionListener(e -> fp.setCurrentFractal(String.valueOf(dropDownMenu.getSelectedItem())));
         amountControl.setFractalPanel(fp);
 
         mn.add(selectPnl, BorderLayout.SOUTH);
         selectPnl.add(dropDownMenu);
         selectPnl.add(controlPanel);
         mn.add(fp);
+
+        mn.revalidate();
+        mn.repaint();
     }
 
 }
