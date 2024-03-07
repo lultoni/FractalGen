@@ -42,9 +42,10 @@ public class FractalPanel extends JPanel {
 
     private void drawHexFractal(Graphics g, int amount, int max_amount) {
         if (amount > max_amount) return;
-        int offset = amount * 10;
+//        int offset = (int) (20 * (1 - (amount/max_amount) + 0.1));
+        int offset = 10 * amount;
 
-        int lengthSide = (int) (250 - 10 * (1 - (amount/max_amount)));
+        int lengthSide = 250 - offset;
 
         int x6 = 0;
         int y6 = (int) (lengthSide / 1.153846);
