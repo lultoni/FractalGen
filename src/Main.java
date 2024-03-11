@@ -23,7 +23,7 @@ public class Main extends JFrame {
 
         JPanel controlPanel = new JPanel();
         AmountControl amountControl = new AmountControl(null);
-        // TODO dropdown menu for different types of fractals (parameter in FractalPanel class)
+
         String cbList[] = {"Circles", "Hexagons", "Squares"};
         JComboBox dropDownMenu = new JComboBox(cbList);
 

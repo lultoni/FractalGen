@@ -49,7 +49,7 @@ public class FractalPanel extends JPanel {
 
             int ox1 = x1;
             x1 = x1 + lengthSide / 10;
-            y1 = y1 + (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) - Math.pow(x1 - ox1, 2));
+            y1 = y1 + (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) - Math.pow(x1 - ox1, 2));//TODO: x1-ox1 geht nicht sobald drehung dazu kommt, wir brauchen noch einen satzt des pythagoras (yay). es scheint irgendwann ins minus zu gehen was ich nicht weiß wie das resolved werden soll wenn die Längen nur größer werden?!? aber idk is auf jeden fall einer der Fehler
 
             int oy2 = y2;
             y2 = y2 + lengthSide / 10;
