@@ -31,13 +31,36 @@ public class FractalPanel extends JPanel {
                 updateFractal(amount);
             }
             case "Squares" -> {
-                drawSquareFractal(g, 1, amount, 10, 10);
+                drawSquareFractal(g, 1, amount, 400);
                 updateFractal(amount);
             }
         }
     }
 
-    private void drawSquareFractal(Graphics g, int i, int amount, int i1, int i2) {
+    private void drawSquareFractal(Graphics g, int amount, int max_amount, int lengthSide) {
+        if (amount > max_amount) return;
+
+        int offset = 10 * amount;
+
+        lengthSide = (amount == 1) ? 400 - offset : (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) + Math.pow(9 * ((double) lengthSide / 10), 2));
+
+        int x1 = 0 + offset;
+        int y1 = 0 + offset;
+
+        int x2 = x1 + lengthSide;
+        int y2 = y1;
+
+        int x3 = x2;
+        int y3 = y1 + lengthSide;
+
+        int x4 =  x1;
+        int y4 = y3;
+
+        g.drawLine(x1, y1, x2, y2);
+        g.drawLine(x2, y2, x3, y3);
+        g.drawLine(x3, y3, x4, y4);
+        g.drawLine(x4, y4, x1, y1);
+        drawSquareFractal(g, amount + 1, max_amount, lengthSide);
     }
 
     private void drawHexFractal(Graphics g, int amount, int max_amount) {
