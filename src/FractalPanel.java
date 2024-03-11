@@ -42,19 +42,27 @@ public class FractalPanel extends JPanel {
 
         int offset = 10 * amount;
 
-        lengthSide = (amount == 1) ? 400 : (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) + Math.pow(9 * ((double) lengthSide / 10), 2));
+        if (amount == 1) {
+            lengthSide = 400;
+        } else {
+            lengthSide = (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) + Math.pow(9 * ((double) lengthSide / 10), 2));
 
-        x1 = x1 + lengthSide / 10;
-        y1 = 0 + offset; // TODO
+            int ox1 = x1;
+            x1 = x1 + lengthSide / 10;
+            y1 = y1 + (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) - Math.pow(x1 - ox1, 2));
 
-        x2 = x1 + lengthSide; // TODO
-        y2 = y2 + lengthSide / 10;
+            int oy2 = y2;
+            y2 = y2 + lengthSide / 10;
+            x2 = x2 - (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) - Math.pow(y2 - oy2, 2));
 
-        x3 = x3 - lengthSide / 10;
-        y3 = y1 + lengthSide; // TODO
+            int ox3 = x3;
+            x3 = x3 - lengthSide / 10;
+            y3 = y3 - (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) - Math.pow(ox3 - x3, 2));
 
-        x4 = x1; // TODO
-        y4 = y4 - lengthSide / 10;
+            int oy4 = y4;
+            y4 = y4 - lengthSide / 10;
+            x4 = x4 + (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) - Math.pow(oy4 - y4, 2));
+        }
 
         g.drawLine(x1, y1, x2, y2);
         g.drawLine(x2, y2, x3, y3);
