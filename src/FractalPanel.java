@@ -34,13 +34,57 @@ public class FractalPanel extends JPanel {
                 drawSquareFractal(g, 1, amount, 400, 10, 10, 410, 10, 410, 410, 10, 410);
                 updateFractal(amount);
             }
+            case "Fractal Tree" -> {
+                drawFractalTree(g, 1, amount, 250, 400, 0, 100);
+                updateFractal(amount);
+            }
         }
     }
 
+    private void drawFractalTree(Graphics g, int amount, int maxAmount, double endpoint_x, double endpoint_y, double angle, double lengthSide) {
+        if (amount > maxAmount) return;
+        double divider = 1.5 - (amount - 1) * 0.02;
+        if (divider <= 0) divider = 0.01;
+        if (amount == 1) {
+            g.drawLine((int) endpoint_x, (int) endpoint_y, (int) endpoint_x, (int) (endpoint_y - lengthSide));
+            drawFractalTree(g, amount + 1, maxAmount, endpoint_x, endpoint_y - lengthSide, angle, lengthSide / divider);
+        } else {
+            double la = (angle - 90 + angle) / 2;
+            if (la < 0) la += 360;
+            double ra = (angle + 90 + angle) / 2;
+            if (ra < 0) ra += 360;
+            double lx = calculateX(endpoint_x, la, lengthSide, true);
+            double ly = calculateY(endpoint_y, la, lengthSide, true);
+            double rx = calculateX(endpoint_x, ra, lengthSide, false);
+            double ry = calculateY(endpoint_y, ra, lengthSide, false);
+            g.drawLine((int) endpoint_x, (int) endpoint_y, (int) lx, (int) ly);
+            g.drawLine((int) endpoint_x, (int) endpoint_y, (int) rx, (int) ry);
+            drawFractalTree(g, amount + 1, maxAmount, lx, ly, la + 90, lengthSide / divider);
+            drawFractalTree(g, amount + 1, maxAmount, rx, ry, ra - 90, lengthSide / divider);
+        }
+    }
+
+    private int calculateX(double endpointX, double angle, double lengthSide, boolean left) {
+        double v = lengthSide * Math.cos(Math.toRadians(angle));
+        if (left) {
+            return (int) (endpointX - v);
+        } else {
+            return (int) (endpointX + v);
+        }
+    }
+
+    private int calculateY(double endpointY, double angle, double lengthSide, boolean left) {
+        double v = lengthSide * Math.sin(Math.toRadians(angle));
+        if (left) {
+            return (int) (endpointY + v);
+        } else {
+            return (int) (endpointY - v);
+        }
+    }
+
+
     private void drawSquareFractal(Graphics g, int amount, int max_amount, int lengthSide, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
         if (amount > max_amount) return;
-
-        int offset = 10 * amount;
 
         if (amount == 1) {
             lengthSide = 400;
@@ -49,7 +93,8 @@ public class FractalPanel extends JPanel {
 
             int ox1 = x1;
             x1 = x1 + lengthSide / 10;
-            y1 = y1 + (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) - Math.pow(x1 - ox1, 2));//TODO: x1-ox1 geht nicht sobald drehung dazu kommt, wir brauchen noch einen satzt des pythagoras (yay). es scheint irgendwann ins minus zu gehen was ich nicht weiß wie das resolved werden soll wenn die Längen nur größer werden?!? aber idk is auf jeden fall einer der Fehler
+            y1 = y1 + (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) - Math.pow(x1 - ox1, 2));
+            // TODO: x1-ox1 geht nicht sobald drehung dazu kommt, wir brauchen noch einen satzt des pythagoras (yay). es scheint irgendwann ins minus zu gehen was ich nicht weiß wie das resolved werden soll wenn die Längen nur größer werden?!? aber idk is auf jeden fall einer der Fehler
 
             int oy2 = y2;
             y2 = y2 + lengthSide / 10;
