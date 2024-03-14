@@ -5,10 +5,12 @@ public class FractalPanel extends JPanel {
 
     private int amount;
     public String currentFractal;
+    public int sideLength;
 
     public FractalPanel(int amount){
         currentFractal = "Circles";
         this.amount = amount;
+        sideLength = 400;
         setBackground(Color.white);
     }
 
@@ -31,11 +33,11 @@ public class FractalPanel extends JPanel {
                 updateFractal(amount);
             }
             case "Squares" -> {
-                drawSquareFractal(g, 1, amount, 400, 10, 10, 410, 10, 410, 410, 10, 410);
+                drawSquareFractal(g, 1, amount, sideLength, 10, 10, sideLength + 10, 10, sideLength + 10, sideLength + 10, 10, sideLength + 10);
                 updateFractal(amount);
             }
             case "Fractal Tree" -> {
-                drawFractalTree(g, 1, amount, 250, 400, 0, 100);
+                drawFractalTree(g, 1, amount, 250, sideLength * 3.5, 0, sideLength);
                 updateFractal(amount);
             }
         }
@@ -43,7 +45,7 @@ public class FractalPanel extends JPanel {
 
     private void drawFractalTree(Graphics g, int amount, int maxAmount, double endpoint_x, double endpoint_y, double angle, double lengthSide) {
         if (amount > maxAmount) return;
-        double divider = 1.5 - (amount - 1) * 0.02;
+        double divider = 1.5 - (amount - 1) * 0.03;
         if (divider <= 0) divider = 0.01;
         if (amount == 1) {
             g.drawLine((int) endpoint_x, (int) endpoint_y, (int) endpoint_x, (int) (endpoint_y - lengthSide));
@@ -88,13 +90,12 @@ public class FractalPanel extends JPanel {
 
         if (amount == 1) {
             lengthSide = 400;
-        } else {
+        } else if (amount == 2) {
             lengthSide = (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) + Math.pow(9 * ((double) lengthSide / 10), 2));
 
             int ox1 = x1;
             x1 = x1 + lengthSide / 10;
             y1 = y1 + (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) - Math.pow(x1 - ox1, 2));
-            // TODO: x1-ox1 geht nicht sobald drehung dazu kommt, wir brauchen noch einen satzt des pythagoras (yay). es scheint irgendwann ins minus zu gehen was ich nicht weiß wie das resolved werden soll wenn die Längen nur größer werden?!? aber idk is auf jeden fall einer der Fehler
 
             int oy2 = y2;
             y2 = y2 + lengthSide / 10;
@@ -107,6 +108,24 @@ public class FractalPanel extends JPanel {
             int oy4 = y4;
             y4 = y4 - lengthSide / 10;
             x4 = x4 + (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) - Math.pow(oy4 - y4, 2));
+        } else if (amount < 10) {
+            lengthSide = (int) Math.sqrt(Math.pow((double) lengthSide / 10, 2) + Math.pow(9 * ((double) lengthSide / 10), 2));
+
+            int ox1 = x1;
+            x1 = x1 + lengthSide / 10;
+            y1 = y1 + (int) (Math.sqrt(Math.pow(((double) lengthSide / 10), 2) - Math.pow((x1 - ox1), 2)) * ((double) amount / 3));
+
+            int oy2 = y2;
+            y2 = y2 + lengthSide / 10;
+            x2 = x2 - (int) (Math.sqrt(Math.pow(((double) lengthSide / 10), 2) - Math.pow((y2 - oy2), 2)) * ((double) amount / 3));
+
+            int ox3 = x3;
+            x3 = x3 - lengthSide / 10;
+            y3 = y3 - (int) (Math.sqrt(Math.pow(((double) lengthSide / 10), 2) - Math.pow((ox3 - x3), 2)) * ((double) amount / 3));
+
+            int oy4 = y4;
+            y4 = y4 - lengthSide / 10;
+            x4 = x4 + (int) (Math.sqrt(Math.pow(((double) lengthSide / 10), 2) - Math.pow((oy4 - y4), 2)) * ((double) amount / 3));
         }
 
         g.drawLine(x1, y1, x2, y2);
@@ -119,9 +138,9 @@ public class FractalPanel extends JPanel {
     private void drawHexFractal(Graphics g, int amount, int max_amount) {
         if (amount > max_amount) return;
         double div_out = (double) amount /max_amount;
-        int offset = (int) (230 * (1 - div_out + 0.1));
+        int offset = (int) ((sideLength - sideLength / 20) * (1 - div_out + 0.1));
 
-        int lengthSide = 250 - offset;
+        int lengthSide = sideLength - offset;
 
         int x6 = 0;
         int y6 = (int) (lengthSide / 1.153846);
@@ -146,7 +165,7 @@ public class FractalPanel extends JPanel {
 
     public void drawCircleFractal(Graphics g, int amount, int max_amount, int offset_x, int offset_y) {
         if (amount > max_amount) return;
-        int wh = (int) (500 / Math.pow(2, amount - 1));
+        int wh = (int) (sideLength / Math.pow(2, amount - 1));
         if (amount == 1) {
             g.drawOval(offset_x, offset_y, wh, wh);
             drawCircleFractal(g, amount + 1, max_amount, offset_x, offset_y);

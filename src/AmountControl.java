@@ -21,6 +21,7 @@ public class AmountControl extends JPanel {
         plusButton.addActionListener(e -> {
             amount++;
             minusButton.setEnabled(amount > 0);
+            plusButton.setEnabled(!(panel.currentFractal.equals("Squares") && amount >= 10));
             amountLabel.setText(getAmountText());
             revalidate();
             repaint();
@@ -30,6 +31,7 @@ public class AmountControl extends JPanel {
         minusButton.addActionListener(e -> {
             amount--;
             minusButton.setEnabled(amount > 0);
+            plusButton.setEnabled(!(panel.currentFractal.equals("Squares") && amount >= 10));
             amountLabel.setText(getAmountText());
             revalidate();
             repaint();
