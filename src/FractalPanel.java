@@ -18,29 +18,16 @@ public class FractalPanel extends JPanel {
         currentFractal = s;
     }
 
-    //starts automatically when adding Panel to Frame
-    //or call fractalPanel.repaint() in JFrame-Class
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         switch (currentFractal) {
-            case "Circles" -> {
-                drawCircleFractal(g, 1, amount, 10, 10);
-                updateFractal(amount);
-            }
-            case "Hexagons" -> {
-                drawHexFractal(g, 1, amount);
-                updateFractal(amount);
-            }
-            case "Squares" -> {
-                drawSquareFractal(g, 1, amount, sideLength, 10, 10, sideLength + 10, 10, sideLength + 10, sideLength + 10, 10, sideLength + 10);
-                updateFractal(amount);
-            }
-            case "Fractal Tree" -> {
-                drawFractalTree(g, 1, amount, 250, sideLength * 3.5, 0, sideLength);
-                updateFractal(amount);
-            }
+            case "Circles" -> drawCircleFractal(g, 1, amount, 10, 10);
+            case "Hexagons" -> drawHexFractal(g, 1, amount);
+            case "Squares" -> drawSquareFractal(g, 1, amount, sideLength, 10, 10, sideLength + 10, 10, sideLength + 10, sideLength + 10, 10, sideLength + 10);
+            case "Fractal Tree" -> drawFractalTree(g, 1, amount, 250, sideLength * 3.5, 0, sideLength);
         }
+        updateFractal(amount);
     }
 
     private void drawFractalTree(Graphics g, int amount, int maxAmount, double endpoint_x, double endpoint_y, double angle, double lengthSide) {
